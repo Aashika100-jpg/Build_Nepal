@@ -129,3 +129,36 @@ class _CoTravelerScreenState extends State<CoTravelerScreen> {
                 onPressed: _leaveChat,
               )
             : null,
+      ),
+      // Smooth animated transition between the list and chat
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: _inChatMode ? _buildChatInterface() : _buildMatchList(),
+      ),
+    );
+  }
+
+  // ==========================================
+  // VIEW 1: THE PREMIUM MATCH LIST
+  // ==========================================
+  Widget _buildMatchList() {
+    return ListView.builder(
+      key: const ValueKey("MatchList"),
+      padding: const EdgeInsets.all(16),
+      itemCount: _invitations.length + 1,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "People heading your way",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.indigo[900],
+                  ),
+                ),
+                const SizedBox(height: 4),
