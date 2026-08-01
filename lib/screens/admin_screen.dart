@@ -496,3 +496,58 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
                   onPressed: _sendTargetedAlert,
                   icon: const Icon(
                     Icons.cell_tower,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                  label: const Text(
+                    "TRANSMIT ALERT",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red[800],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: TextField(
+            onChanged: (val) => setState(() => _searchQuery = val),
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              hintText: "Track Individual (Name or ID)...",
+              hintStyle: TextStyle(color: Colors.grey[600]),
+              prefixIcon: const Icon(
+                Icons.person_search,
+                color: Colors.tealAccent,
+              ),
+              filled: true,
+              fillColor: const Color(0xFF1E1E1E),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 40,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            children: [
+              _buildRegionFilterButton('All'),
+              _buildRegionFilterButton('Kathmandu'),
+              _buildRegionFilterButton('Pokhara'),
+              _buildRegionFilterButton('Everest Region'),
+            ],
