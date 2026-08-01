@@ -147,3 +147,30 @@ class _SOSCountdownScreenState extends State<SOSCountdownScreen>
     _pulseController.dispose();
     super.dispose();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.red[900],
+      body: SafeArea(
+        child: Center(
+          child: _isSending
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 4,
+                    ),
+                    SizedBox(height: 24),
+                    Text(
+                      'ESTABLISHING SECURE CONNECTION\n& DISPATCHING SMS...',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
