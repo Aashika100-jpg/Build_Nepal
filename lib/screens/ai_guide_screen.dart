@@ -95,3 +95,34 @@ class _AiGuideScreenState extends State<AiGuideScreen> {
       });
     }
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('AI Monument Guide'),
+        backgroundColor: Colors.teal[800],
+        foregroundColor: Colors.white,
+        elevation: 0,
+      ),
+      backgroundColor: Colors.grey[100],
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Connection Settings Card
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.wifi_tethering, color: Colors.teal[700]),
+                        const SizedBox(width: 8),
