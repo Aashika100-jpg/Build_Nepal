@@ -74,5 +74,19 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
           );
           return;
         }
+        setState(() {
+          _base64Image = base64String;
+        });
+      }
+    } catch (e) {
+      if (!mounted) return;
+      _showCustomSnackBar(
+        'Camera error: $e',
+        Colors.red[800]!,
+        Icons.error_outline,
+      );
+    }
+  }
+
 
 
