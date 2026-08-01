@@ -481,3 +481,64 @@ class _CoTravelerScreenState extends State<CoTravelerScreen> {
             ],
           ),
         ),
+
+        // Chat Messages List
+        Expanded(
+          child: Container(
+            color: Colors.blueGrey[50],
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: _chatMessages.length,
+              itemBuilder: (context, index) {
+                final msg = _chatMessages[index];
+                return _buildChatBubble(msg["text"], msg["isMe"], msg["time"]);
+              },
+            ),
+          ),
+        ),
+
+        // Interactive Input Area
+        Container(
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            border: Border(top: BorderSide(color: Colors.black12, width: 1)),
+          ),
+          child: SafeArea(
+            top: false,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.add_circle_outline_rounded,
+                    color: Colors.indigo[600],
+                    size: 28,
+                  ),
+                  onPressed: () {},
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: _chatController,
+                    decoration: InputDecoration(
+                      hintText: "Type a message...",
+                      hintStyle: TextStyle(color: Colors.grey[500]),
+                      filled: true,
+                      fillColor: Colors.grey[100],
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    onSubmitted: (_) => _sendMessage(),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.indigo[600],
+                    shape: BoxShape.circle,
+                  ),
