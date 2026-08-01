@@ -296,3 +296,50 @@ class _CoTravelerScreenState extends State<CoTravelerScreen> {
                               fontSize: 12,
                             ),
                           ),
+                          Text(
+                            buddy["destination"],
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+
+                // Shared Interests Chips
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: (buddy["interests"] as List).map((interest) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.indigo[50],
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.indigo[100]!),
+                      ),
+                      child: Text(
+                        interest,
+                        style: TextStyle(
+                          color: Colors.indigo[800],
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
+
+                // Action Buttons
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
