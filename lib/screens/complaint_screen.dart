@@ -355,4 +355,41 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                                 category['icon'],
                                 color: category['color'],
                                 size: 20,
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                category['name'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF334155),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) =>
+                          setState(() => _selectedCategory = newValue),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // --- VENDOR/LOCATION INPUT ---
+                    TextFormField(
+                      controller: _vendorNameController,
+                      style: const TextStyle(fontWeight: FontWeight.w500),
+                      decoration: _getPremiumInputDecoration(
+                        'Location or Vendor Name (Optional)',
+                        Icons.store_mall_directory_rounded,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // --- DESCRIPTION INPUT ---
+                    TextFormField(
+                      controller: _descriptionController,
+                      maxLines: 4,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        height: 1.4,
+                      ),
 
