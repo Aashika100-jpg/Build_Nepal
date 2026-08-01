@@ -441,3 +441,43 @@ class _CoTravelerScreenState extends State<CoTravelerScreen> {
               ),
               const SizedBox(width: 12),
               Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _activeBuddy!["name"],
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.g_translate_rounded,
+                          size: 12,
+                          color: Colors.indigo,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          "Live Translation Active",
+                          style: TextStyle(
+                            color: Colors.indigo[700],
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.shield_outlined, color: Colors.green),
+                tooltip: "Safe & Encrypted",
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
