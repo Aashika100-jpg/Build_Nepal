@@ -126,3 +126,31 @@ class _AiGuideScreenState extends State<AiGuideScreen> {
                       children: [
                         Icon(Icons.wifi_tethering, color: Colors.teal[700]),
                         const SizedBox(width: 8),
+                        const Text(
+                          "Server Connection",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: _ipController,
+                      decoration: InputDecoration(
+                        labelText: 'Laptop IP Address',
+                        hintText: 'e.g. 192.168.1.15',
+                        filled: true,
+                        fillColor: Colors.teal[50],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        isDense: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
