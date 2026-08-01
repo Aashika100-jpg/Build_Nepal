@@ -50,4 +50,29 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
     },
   ];
 
+  Future<void> _pickAndCompressImage(ImageSource source) async {
+    final ImagePicker picker = ImagePicker();
+
+    try {
+      final XFile? pickedFile = await picker.pickImage(
+        source: source,
+        imageQuality: 15,
+        maxWidth: 600,
+      );
+
+      if (pickedFile != null) {
+        File file = File(pickedFile.path);
+        List<int> imageBytes = await file.readAsBytes();
+        String base64String = base64Encode(imageBytes);
+
+        if (base64String.length > 900000) {
+          if (!mounted) return;
+          _showCustomSnackBar(
+            'Photo is too large or detailed. Try snapping a simpler picture.',
+            Colors.orange[800]!,
+            Icons.photo_size_select_large_rounded,
+          );
+          return;
+        }
+
 
