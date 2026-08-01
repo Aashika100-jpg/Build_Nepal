@@ -276,4 +276,49 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(
+                            children: [
+                              Icon(
+                                isLast ? Icons.location_on : Icons.circle,
+                                color: isLast
+                                    ? (isSOS
+                                          ? Colors.redAccent
+                                          : Colors.tealAccent)
+                                    : Colors.grey[700],
+                                size: isLast ? 24 : 12,
+                              ),
+                              if (!isLast)
+                                Container(
+                                  width: 2,
+                                  height: 30,
+                                  color: Colors.grey[800],
+                                ),
+                            ],
+                          ),
+                          const SizedBox(width: 16),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 2.0),
+                            child: Text(
+                              tourist['history'][index],
+                              style: TextStyle(
+                                color: isLast ? Colors.white : Colors.grey[500],
+                                fontWeight: isLast
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
     
