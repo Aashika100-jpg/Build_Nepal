@@ -545,9 +545,55 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            children: [
-              _buildRegionFilterButton('All'),
-              _buildRegionFilterButton('Kathmandu'),
-              _buildRegionFilterButton('Pokhara'),
-              _buildRegionFilterButton('Everest Region'),
-            ],
+            children:
+                [
+                  'All',
+                  'Kathmandu',
+                  'Pokhara',
+                  'Everest Region',
+                  'Chitwan',
+                ].map((region) {
+                  final isSelected = _activeFilterRegion == region;
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: ChoiceChip(
+                      label: Text(
+                        region,
+                        style: TextStyle(
+                          color: isSelected ? Colors.black : Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      selected: isSelected,
+                      selectedColor: Colors.tealAccent,
+                      backgroundColor: const Color(0xFF1E1E1E),
+                      onSelected: (bool selected) =>
+                          setState(() => _activeFilterRegion = region),
+                    ),
+                  );
+                }).toList(),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
+            "ACTIVE TARGETS",
+            style: TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.5,
+            ),
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: filteredTourists.length,
+            itemBuilder: (context, index) {
+              final t = filteredTourists[index];
+              final isSOS = t['status'] == 'SOS';
+
+              return Card(
+                color: const Color(0xFF161616),
+                margin: const EdgeInsets.only(bottom: 12),
+                shape: RoundedRectangleBorder(
