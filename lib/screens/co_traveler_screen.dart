@@ -591,3 +591,30 @@ class _CoTravelerScreenState extends State<CoTravelerScreen> {
                   ),
                 ],
               ),
+              child: Text(
+                message,
+                style: TextStyle(
+                  color: isMe ? Colors.white : Colors.black87,
+                  fontSize: 15,
+                  height: 1.3,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4, left: 4, right: 4),
+              child: Text(
+                time,
+                style: TextStyle(
+                  color: Colors.grey[500],
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
