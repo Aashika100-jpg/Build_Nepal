@@ -29,3 +29,25 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
       'color': Colors.orange,
     },
     {
+      'name': 'Dirty / Unhygienic',
+      'icon': Icons.sanitizer_rounded,
+      'color': Colors.brown,
+    },
+    {
+      'name': 'Scammer / Fraud',
+      'icon': Icons.money_off_csred_rounded,
+      'color': Colors.red,
+    },
+    {
+      'name': 'Harassment',
+      'icon': Icons.pan_tool_rounded,
+      'color': Colors.purple,
+    },
+    {
+      'name': 'Safety Hazard',
+      'icon': Icons.warning_rounded,
+      'color': Colors.amber[700],
+    },
+  ];
+
+
