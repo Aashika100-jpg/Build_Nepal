@@ -197,3 +197,51 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
     }
     return locations.toList()..sort();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    // Advanced Multi-Layer Filter Engine
+    final filteredItems = _pricingDatabase.where((item) {
+      final matchesSearch = item.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          item.location.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          item.pickup.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          item.dropoff.toLowerCase().contains(_searchQuery.toLowerCase());
+
+      final matchesTab = _selectedTab == "all" || item.category == _selectedTab;
+      
+      // Strict routing filter applied exclusively to transport tabs
+      bool matchesRoute = true;
+      if (_selectedTab == "taxi" || _selectedTab == "bus") {
+        if (_selectedPickup != "All" && item.pickup != _selectedPickup) matchesRoute = false;
+        if (_selectedDropoff != "All" && item.dropoff != _selectedDropoff) matchesRoute = false;
+      }
+
+      return matchesSearch && matchesTab && matchesRoute;
+    }).toList();
+
+    final isTransportMode = _selectedTab == "taxi" || _selectedTab == "bus";
+
+    return Scaffold(
+      backgroundColor: Colors.blueGrey[50],
+      appBar: AppBar(
+        title: const Text(
+          'Smart Pricing & Route Hub',
+          style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.5),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.teal[800],
+        foregroundColor: Colors.white,
+        actions: [
+          if (_selectedPickup != "All" || _selectedDropoff != "All" || _searchQuery.isNotEmpty)
+            IconButton(
+              icon: const Icon(Icons.refresh_rounded),
+              tooltip: "Reset Filters",
+              onPressed: () {
+                setState(() {
+                  _searchQuery = "";
+                  _selectedPickup = "All";
+                  _selectedDropoff = "All";
+                });
+              },
+            )
+        ],
