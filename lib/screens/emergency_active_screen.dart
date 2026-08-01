@@ -336,3 +336,47 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
       ),
     );
   }
+
+  Widget _buildRouteSelector() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(14, 12, 14, 4),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8, offset: const Offset(0, 2))
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Filter by Specific Route",
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87, fontSize: 14),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: DropdownButtonFormField<String>(
+                  value: _selectedPickup,
+                  decoration: _getDropdownDecoration("Pick-up Point"),
+                  items: _getUniqueLocations(true).map((String loc) {
+                    return DropdownMenuItem<String>(value: loc, child: Text(loc));
+                  }).toList(),
+                  onChanged: (v) => setState(() => _selectedPickup = v ?? "All"),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: DropdownButtonFormField<String>(
+                  value: _selectedDropoff,
+                  decoration: _getDropdownDecoration("Drop-off Point"),
+                  items: _getUniqueLocations(false).map((String loc) {
+                    return DropdownMenuItem<String>(value: loc, child: Text(loc));
+                  }).toList(),
+                  onChanged: (v) => setState(() => _selectedDropoff = v ?? "All"),
+                ),
+              ),
+            ],
