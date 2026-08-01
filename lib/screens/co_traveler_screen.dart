@@ -55,3 +55,47 @@ class _CoTravelerScreenState extends State<CoTravelerScreen> {
 
   void _acceptInvite(Map<String, dynamic> buddy) {
     setState(() {
+      _activeBuddy = buddy;
+      _inChatMode = true;
+      // Pre-load mock conversation context
+      _chatMessages = [
+        {
+          "text":
+              "Hi! I saw we are both heading to ${buddy["destination"]}. Want to share a ride?",
+          "isMe": false,
+          "time": "10:41 AM",
+        },
+        {
+          "text":
+              "Hello! Yes, that would be great. It will save us money and be much safer.",
+          "isMe": true,
+          "time": "10:42 AM",
+        },
+        {
+          "text":
+              "Perfect! My Yatra Sathi app says the fair price should be around 800 NPR total.",
+          "isMe": false,
+          "time": "10:43 AM",
+        },
+      ];
+    });
+  }
+
+  void _leaveChat() {
+    setState(() {
+      _inChatMode = false;
+      _activeBuddy = null;
+    });
+  }
+
+  void _sendMessage() {
+    if (_chatController.text.trim().isEmpty) return;
+
+    setState(() {
+      _chatMessages.add({
+        "text": _chatController.text.trim(),
+        "isMe": true,
+        "time": _getCurrentTime(),
+      });
+      _chatController.clear();
+    });
