@@ -699,3 +699,28 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
           );
         }
 
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.verified_user_rounded,
+                  size: 80,
+                  color: Colors.grey[800],
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "No Active Complaints",
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+
