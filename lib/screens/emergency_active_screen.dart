@@ -437,3 +437,55 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
             ],
           ),
         ),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              "NPR ${item.minPrice.toInt()}-${item.maxPrice.toInt()}",
+              style: const TextStyle(fontWeight: FontWeight.w800, color: Colors.teal, fontSize: 15),
+            ),
+            Text(
+              "per ${item.unit}",
+              style: TextStyle(color: Colors.grey[500], fontSize: 11, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.teal[50]?.withOpacity(0.3),
+              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Divider(height: 1),
+                const SizedBox(height: 12),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(Icons.lightbulb_outline_rounded, color: Colors.amber[800], size: 20),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        "Pro Tip: ${item.tip}",
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          color: Colors.blueGrey[800],
+                          fontSize: 13.5,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
