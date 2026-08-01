@@ -117,7 +117,7 @@ class _AdminScreenState extends State<AdminScreen> {
       ).showSnackBar(SnackBar(content: Text('Firebase Error: $e')));
     }
   }
-  
+
 void _showTouristDetails(Map<String, dynamic> tourist) {
     final isSOS = tourist['status'] == 'SOS';
 
@@ -204,4 +204,20 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
                                 color: Colors.redAccent,
                                 strokeWidth: 2,
                               ),
+                                                          ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                "Action: ${tourist['action']}",
+                                style: const TextStyle(
+                                  color: Colors.orangeAccent,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
     
