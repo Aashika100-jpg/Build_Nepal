@@ -597,3 +597,91 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
                 color: const Color(0xFF161616),
                 margin: const EdgeInsets.only(bottom: 12),
                 shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: BorderSide(
+                    color: isSOS ? Colors.redAccent : Colors.transparent,
+                    width: isSOS ? 2 : 0,
+                  ),
+                ),
+                child: ListTile(
+                  onTap: () => _showTouristDetails(t),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  leading: CircleAvatar(
+                    backgroundColor: isSOS
+                        ? Colors.redAccent.withOpacity(0.2)
+                        : Colors.tealAccent.withOpacity(0.1),
+                    child: Icon(
+                      t['group'] == 'Solo' ? Icons.person : Icons.group,
+                      color: isSOS ? Colors.redAccent : Colors.tealAccent,
+                    ),
+                  ),
+                  title: Text(
+                    t['name'],
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          size: 14,
+                          color: Colors.grey[500],
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          t['loc'],
+                          style: TextStyle(color: Colors.grey[400]),
+                        ),
+                      ],
+                    ),
+                  ),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isSOS ? Colors.redAccent : Colors.green[900],
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          isSOS ? "CRITICAL SOS" : "SAFE",
+                          style: TextStyle(
+                            color: isSOS ? Colors.white : Colors.greenAccent,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        "ID: ${t['id']}",
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 11,
+                          fontFamily: 'monospace',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
