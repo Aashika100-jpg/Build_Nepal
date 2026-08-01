@@ -103,3 +103,47 @@ class _SOSCountdownScreenState extends State<SOSCountdownScreen>
             'status': 'dispatching',
             'timestamp': FieldValue.serverTimestamp(),
           });
+
+      // 2. Trigger the SMS to the Emergency Contact
+      await _sendEmergencySMS(mockLat, mockLng);
+
+      if (!mounted) return;
+
+      // 3. Route to the Active Emergency Screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              EmergencyActiveScreen(emergencyId: emergencyRef.id),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _isSending = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'System Error: $e',
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.red[900],
+        ),
+      );
+    }
+  }
+
+  void _cancelSOS() {
+    _timer?.cancel();
+    _pulseController.dispose();
+    Navigator.pop(context);
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pulseController.dispose();
+    super.dispose();
+  }
