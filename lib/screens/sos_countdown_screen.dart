@@ -51,3 +51,28 @@ class _SOSCountdownScreenState extends State<SOSCountdownScreen>
       }
     });
   }
+
+  // --- NEW: SMS Dispatch Engine ---
+  Future<void> _sendEmergencySMS(double lat, double lng) async {
+    const String emergencyNumber = "+9779863635324";
+    final String message =
+        "🚨 URGENT SOS! I am in danger and require immediate assistance. "
+        "My current GPS location is: Lat: $lat, Lng: $lng. "
+        "Please send help!";
+
+    final Uri smsUri = Uri(
+      scheme: 'sms',
+      path: emergencyNumber,
+      queryParameters: <String, String>{'body': message},
+    );
+
+    try {
+      if (await canLaunchUrl(smsUri)) {
+        await launchUrl(smsUri);
+      } else {
+        debugPrint("Warning: Device cannot launch SMS app.");
+      }
+    } catch (e) {
+      debugPrint("SMS Error: $e");
+    }
+  }
