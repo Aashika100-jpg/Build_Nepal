@@ -168,3 +168,21 @@ class _AiGuideScreenState extends State<AiGuideScreen> {
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
+                ],
+              ),
+              child: _image == null
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.image_search_rounded,
+                          size: 60,
+                          color: Colors.teal[200],
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          "No monument selected",
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                      ],
+                    )
