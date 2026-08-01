@@ -71,3 +71,23 @@ class _VrTourScreenState extends State<VrTourScreen> {
           ),
         ],
       ),
+      body: Stack(
+        children: [
+          // 1. The Immersive Spatial Rendering Canvas
+          PanoramaViewer(
+            // Conditionally binds directly to physical phone alignment
+            sensorControl: _motionTrackingActive
+                ? SensorControl.orientation
+                : SensorControl.none,
+            child: Image.asset(
+              widget.imagePath,
+              errorBuilder: (context, error, stackTrace) {
+                return const Center(
+                  child: Text(
+                    "Panorama Asset Pending Loaded...",
+                    style: TextStyle(color: Colors.white70, fontSize: 16),
+                  ),
+                );
+              },
+            ),
+          ),
