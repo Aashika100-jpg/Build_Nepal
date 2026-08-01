@@ -167,4 +167,49 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
     );
   }
 
+  Future<void> _submitComplaint() async {
+    FocusScope.of(context).unfocus();
+    if (!_formKey.currentState!.validate()) return;
+
+    if (_selectedCategory == null) {
+      _showCustomSnackBar(
+        'Please select an incident category.',
+        Colors.orange[800]!,
+        Icons.category_rounded,
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final userId =
+          FirebaseAuth.instance.currentUser?.uid ?? 'anonymous_traveler_01';
+
+      await FirebaseFirestore.instance.collection('complaints').add({
+        'user_id': userId,
+        'category': _selectedCategory!.toLowerCase().replaceAll(' / ', '_'),
+        'vendor_name': _vendorNameController.text.trim(),
+        'description': _descriptionController.text.trim(),
+        'evidence_base64': _base64Image,
+        'status': 'pending',
+        'created_at': FieldValue.serverTimestamp(),
+      });
+
+      if (!mounted) return;
+
+      _showCustomSnackBar(
+        'Official Report Filed. Authorities have been notified.',
+        Colors.green[700]!,
+        Icons.check_circle_rounded,
+      );
+
+      _formKey.currentState!.reset();
+      _vendorNameController.clear();
+      _descriptionController.clear();
+      setState(() {
+        _selectedCategory = null;
+        _base64Image = null;
+      });
+
 
