@@ -321,4 +321,38 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 32),
+
+                    const Text(
+                      'INCIDENT DETAILS',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF64748B),
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+
+                    // --- CATEGORY DROPDOWN ---
+                    DropdownButtonFormField<String>(
+                      decoration: _getPremiumInputDecoration(
+                        'Incident Category',
+                        Icons.flag_rounded,
+                      ),
+                      dropdownColor: Colors.white,
+                      icon: const Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Colors.grey,
+                      ),
+                      value: _selectedCategory,
+                      items: _categories.map((category) {
+                        return DropdownMenuItem<String>(
+                          value: category['name'],
+                          child: Row(
+                            children: [
+                              Icon(
+                                category['icon'],
+                                color: category['color'],
+                                size: 20,
 
