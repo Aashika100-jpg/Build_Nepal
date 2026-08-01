@@ -174,3 +174,83 @@ class _SOSCountdownScreenState extends State<SOSCountdownScreen>
                       ),
                     ),
                   ],
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ScaleTransition(
+                      scale: _pulseAnimation,
+                      child: Container(
+                        padding: const EdgeInsets.all(30),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.redAccent.withOpacity(0.3),
+                        ),
+                        child: const Icon(
+                          Icons.warning_amber_rounded,
+                          size: 100,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    const Text(
+                      'SENDING SOS IN',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                    Text(
+                      '$_timeLeft',
+                      style: const TextStyle(
+                        fontSize: 120,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 20,
+                      ),
+                      child: Text(
+                        'Unless canceled, local police will be dispatched and an emergency SMS will be sent to +977 9863635324.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 15,
+                          height: 1.5,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30,
+                              vertical: 15,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          onPressed: _cancelSOS,
+                          child: const Text(
+                            'CANCEL',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
