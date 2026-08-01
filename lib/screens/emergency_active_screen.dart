@@ -245,3 +245,45 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
               },
             )
         ],
+      ),
+      body: Column(
+        children: [
+          _buildSearchBar(),
+          _buildCategoryFilters(),
+          if (isTransportMode) _buildRouteSelector(),
+          Expanded(
+            child: filteredItems.isEmpty
+                ? _buildEmptyState()
+                : ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    itemCount: filteredItems.length,
+                    itemBuilder: (context, index) => _buildPriceCard(filteredItems[index]),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return Container(
+      color: Colors.teal[800],
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+      child: TextField(
+        onChanged: (v) => setState(() => _searchQuery = v),
+        style: const TextStyle(color: Colors.black87),
+        decoration: InputDecoration(
+          hintText: "Search items, specific locations, or routes...",
+          hintStyle: TextStyle(color: Colors.grey[500]),
+          prefixIcon: Icon(Icons.search_rounded, color: Colors.teal[800]),
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: const EdgeInsets.symmetric(vertical: 0),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
+    );
+  }
