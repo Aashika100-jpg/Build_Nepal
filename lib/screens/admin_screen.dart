@@ -86,3 +86,16 @@ class _AdminScreenState extends State<AdminScreen> {
       "history": ["Sauraha (8:00 AM)", "Jungle Safari (Current)"],
     },
   ];
+  
+  Future<void> _sendTargetedAlert() async {
+    if (_warningController.text.isEmpty) return;
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('warnings')
+          .doc('latest')
+          .set({
+            'region': _selectedAlertRegion,
+            'message': _warningController.text,
+            'timestamp': FieldValue.serverTimestamp(),
+          });
