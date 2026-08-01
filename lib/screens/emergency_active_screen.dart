@@ -380,3 +380,60 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  InputDecoration _getDropdownDecoration(String label) {
+    return InputDecoration(
+      labelText: label,
+      labelStyle: TextStyle(color: Colors.teal[800], fontSize: 12, fontWeight: FontWeight.w500),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      filled: true,
+      fillColor: Colors.blueGrey[50]?.withOpacity(0.5),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+    );
+  }
+
+  Widget _buildPriceCard(PricingItem item) {
+    final hasRouteInfo = item.pickup.isNotEmpty && item.dropoff.isNotEmpty;
+
+    return Card(
+      elevation: 0,
+      margin: const EdgeInsets.only(bottom: 10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.grey.withOpacity(0.15), width: 1),
+      ),
+      child: ExpansionTile(
+        shape: const Border(), // Removes bottom line glitch on expansion
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: _getCategoryColor(item.category).withOpacity(0.12),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(_getCategoryIcon(item.category), color: _getCategoryColor(item.category)),
+        ),
+        title: Text(
+          item.name,
+          style: const TextStyle(fontWeight: FontWeight.w700, color: Colors.black87, fontSize: 15),
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 4.0),
+          child: Row(
+            children: [
+              Icon(Icons.location_on_rounded, size: 14, color: Colors.grey[600]),
+              const SizedBox(width: 4),
+              Expanded(
+                child: Text(
+                  hasRouteInfo ? "${item.pickup} ➔ ${item.dropoff}" : item.location,
+                  style: TextStyle(color: Colors.grey[600], fontSize: 13, fontWeight: FontWeight.w500),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
