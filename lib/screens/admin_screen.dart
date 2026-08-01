@@ -321,4 +321,17 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
     );
   }
 
-    
+ void _showEvidenceImage(String base64Str) {
+    showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.all(16),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.memory(base64Decode(base64Str), fit: BoxFit.contain),
+        ),
+      ),
+    );
+  }
+
