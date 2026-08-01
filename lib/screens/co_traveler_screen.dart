@@ -162,3 +162,41 @@ class _CoTravelerScreenState extends State<CoTravelerScreen> {
                   ),
                 ),
                 const SizedBox(height: 4),
+                Text(
+                  "Verified travelers looking to split costs & share experiences.",
+                  style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                ),
+              ],
+            ),
+          );
+        }
+
+        final buddy = _invitations[index - 1];
+        return Card(
+          margin: const EdgeInsets.only(bottom: 16),
+          elevation: 3,
+          shadowColor: Colors.black12,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header: Avatar, Name, Trust Badge, Match %
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundColor: buddy["color"].withOpacity(0.15),
+                      child: Icon(
+                        buddy["avatar"],
+                        size: 35,
+                        color: buddy["color"],
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
