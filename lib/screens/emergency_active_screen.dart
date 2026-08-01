@@ -533,4 +533,3 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
     }
   }
 }
-
