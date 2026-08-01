@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
 
@@ -86,7 +87,7 @@ class _AdminScreenState extends State<AdminScreen> {
       "history": ["Sauraha (8:00 AM)", "Jungle Safari (Current)"],
     },
   ];
-  
+
   Future<void> _sendTargetedAlert() async {
     if (_warningController.text.isEmpty) return;
 
@@ -99,7 +100,8 @@ class _AdminScreenState extends State<AdminScreen> {
             'message': _warningController.text,
             'timestamp': FieldValue.serverTimestamp(),
           });
-          if (!mounted) return;
+
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -118,7 +120,7 @@ class _AdminScreenState extends State<AdminScreen> {
     }
   }
 
-void _showTouristDetails(Map<String, dynamic> tourist) {
+  void _showTouristDetails(Map<String, dynamic> tourist) {
     final isSOS = tourist['status'] == 'SOS';
 
     showModalBottomSheet(
@@ -204,7 +206,7 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
                                 color: Colors.redAccent,
                                 strokeWidth: 2,
                               ),
-                                                          ),
+                            ),
                             const SizedBox(width: 10),
                             Expanded(
                               child: Text(
@@ -220,7 +222,7 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
                       ],
                     ),
                   ),
-                  Container(
+                Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.black,
@@ -321,7 +323,7 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
     );
   }
 
- void _showEvidenceImage(String base64Str) {
+  void _showEvidenceImage(String base64Str) {
     showDialog(
       context: context,
       builder: (_) => Dialog(
@@ -388,7 +390,7 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
       ),
     );
   }
-  
+
   Widget _buildTrackingTab(List<Map<String, dynamic>> filteredTourists) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -912,6 +914,3 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
     );
   }
 }
-
-
-
