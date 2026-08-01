@@ -263,3 +263,37 @@ class _AiGuideScreenState extends State<AiGuideScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 24),
+
+            // Results Area
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.teal[50],
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.teal[200]!, width: 1.5),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.info_outline_rounded,
+                        color: Colors.teal[800],
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "AI Guide Insight",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.teal[900],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(height: 24),
+                  Text(
+                    _resultText,
