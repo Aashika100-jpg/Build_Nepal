@@ -99,3 +99,33 @@ class _CoTravelerScreenState extends State<CoTravelerScreen> {
       });
       _chatController.clear();
     });
+
+    // Auto-scroll logic would go here in a real app using a ScrollController
+  }
+
+  String _getCurrentTime() {
+    final now = DateTime.now();
+    return "${now.hour > 12 ? now.hour - 12 : now.hour}:${now.minute.toString().padLeft(2, '0')} ${now.hour >= 12 ? 'PM' : 'AM'}";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[100],
+      appBar: AppBar(
+        title: Text(
+          _inChatMode ? 'Secure Chat' : 'Find Travel Buddies',
+          style: const TextStyle(
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.5,
+          ),
+        ),
+        backgroundColor: Colors.indigo[700],
+        foregroundColor: Colors.white,
+        elevation: 0,
+        leading: _inChatMode
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                onPressed: _leaveChat,
+              )
+            : null,
