@@ -685,3 +685,17 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
       ],
     );
   }
+
+  Widget _buildComplaintsTab() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('complaints')
+          .orderBy('created_at', descending: true)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.tealAccent),
+          );
+        }
+
