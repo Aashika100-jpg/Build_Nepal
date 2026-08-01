@@ -617,4 +617,3 @@ class _CoTravelerScreenState extends State<CoTravelerScreen> {
     );
   }
 }
-
