@@ -287,3 +287,52 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
       ),
     );
   }
+
+  Widget _buildCategoryFilters() {
+    return Container(
+      height: 65,
+      color: Colors.white,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        children: [
+          _buildTab("all", "All Hub", Icons.dashboard_customize_rounded),
+          _buildTab("taxi", "Taxi Fares", Icons.local_taxi_rounded),
+          _buildTab("bus", "Bus Routes", Icons.directions_bus_rounded),
+          _buildTab("food", "Food & Meals", Icons.restaurant_rounded),
+          _buildTab("goods", "Local Goods", Icons.shopping_bag_rounded),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTab(String id, String label, IconData icon) {
+    final isSelected = _selectedTab == id;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 10),
+      child: ChoiceChip(
+        iconTheme: IconThemeData(color: isSelected ? Colors.white : Colors.teal[800]),
+        avatar: Icon(icon, size: 18),
+        label: Text(
+          label,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: isSelected ? Colors.white : Colors.teal[900],
+          ),
+        ),
+        selected: isSelected,
+        selectedColor: Colors.teal[700],
+        backgroundColor: Colors.teal[50],
+        checkmarkColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        onSelected: (s) => setState(() {
+          _selectedTab = id;
+          // Clear route filters if leaving transport context
+          if (id != "taxi" && id != "bus") {
+            _selectedPickup = "All";
+            _selectedDropoff = "All";
+          }
+        }),
+      ),
+    );
+  }
