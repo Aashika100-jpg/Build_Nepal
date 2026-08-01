@@ -515,3 +515,22 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
     );
   }
 
+  Color _getCategoryColor(String category) {
+    switch (category) {
+      case 'taxi': return Colors.amber[800]!;
+      case 'bus': return Colors.blue[700]!;
+      case 'food': return Colors.green[700]!;
+      default: return Colors.purple[700]!;
+    }
+  }
+
+  IconData _getCategoryIcon(String category) {
+    switch (category) {
+      case 'taxi': return Icons.local_taxi_rounded;
+      case 'bus': return Icons.directions_bus_rounded;
+      case 'food': return Icons.restaurant_rounded;
+      default: return Icons.shopping_bag_rounded;
+    }
+  }
+}
+
