@@ -297,3 +297,18 @@ class _AiGuideScreenState extends State<AiGuideScreen> {
                   const Divider(height: 24),
                   Text(
                     _resultText,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      height: 1.6,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
