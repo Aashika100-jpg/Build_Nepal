@@ -74,6 +74,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
           );
           return;
         }
+
         setState(() {
           _base64Image = base64String;
         });
@@ -224,7 +225,6 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
       if (mounted) setState(() => _isLoading = false);
     }
   }
-
 
   void _showCustomSnackBar(String message, Color color, IconData icon) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -562,7 +562,6 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
             ),
           ),
 
-
           // --- CINEMATIC LOADING OVERLAY ---
           if (_isLoading)
             Positioned.fill(
@@ -641,4 +640,3 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
     );
   }
 }
-
