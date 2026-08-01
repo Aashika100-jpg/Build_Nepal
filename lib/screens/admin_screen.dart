@@ -99,3 +99,22 @@ class _AdminScreenState extends State<AdminScreen> {
             'message': _warningController.text,
             'timestamp': FieldValue.serverTimestamp(),
           });
+          if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '⚠️ Alert successfully broadcasted to $_selectedAlertRegion!',
+          ),
+          backgroundColor: Colors.redAccent,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      _warningController.clear();
+      FocusScope.of(context).unfocus();
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Firebase Error: $e')));
+    }
+  }
+
