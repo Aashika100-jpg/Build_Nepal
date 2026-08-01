@@ -262,4 +262,63 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
+      ),
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTap: () =>
+                FocusScope.of(context).unfocus(), // Dismiss keyboard easily
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 24.0,
+              ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // --- SECURITY TRUST BADGE ---
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.red[50],
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.red.withOpacity(0.3)),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.shield_rounded,
+                            color: Colors.red[800],
+                            size: 32,
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Encrypted & Secure",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.red[900],
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  "This report is sent directly to local tourist authorities.",
+                                  style: TextStyle(
+                                    color: Colors.red[800],
+                                    fontSize: 12,
+                                    height: 1.3,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
