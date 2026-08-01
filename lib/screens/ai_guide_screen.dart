@@ -231,3 +231,35 @@ class _AiGuideScreenState extends State<AiGuideScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 24),
+
+            // Analyze Button
+            ElevatedButton.icon(
+              onPressed: (_image == null || _isLoading) ? null : _analyzeImage,
+              icon: _isLoading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : const Icon(Icons.auto_awesome),
+              label: Text(
+                _isLoading ? "Analyzing..." : "Analyze Monument",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal[700],
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
