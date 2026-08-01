@@ -212,4 +212,54 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
         _base64Image = null;
       });
 
+      // Optional: Pop screen after successful submission
+      // Future.delayed(const Duration(seconds: 2), () => Navigator.pop(context));
+    } catch (e) {
+      _showCustomSnackBar(
+        'Network Error: Failed to transmit report.',
+        Colors.red[800]!,
+        Icons.wifi_off_rounded,
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+
+  void _showCustomSnackBar(String message, Color color, IconData icon) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(icon, color: Colors.white),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: color,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC), // Premium Slate Background
+      appBar: AppBar(
+        title: const Text(
+          'Official Report Portal',
+          style: TextStyle(fontWeight: FontWeight.w800, letterSpacing: 0.5),
+        ),
+        backgroundColor: Colors.red[900],
+        foregroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
 
