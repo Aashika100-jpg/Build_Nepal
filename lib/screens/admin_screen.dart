@@ -335,3 +335,57 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
     );
   }
 
+  Future<void> _markComplaintResolved(String docId) async {
+    await FirebaseFirestore.instance.collection('complaints').doc(docId).update(
+      {'status': 'resolved'},
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final filteredTourists = _allTourists.where((t) {
+      final matchesRegion =
+          _activeFilterRegion == 'All' || t['loc'] == _activeFilterRegion;
+      final matchesSearch =
+          t['name'].toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          t['id'].toLowerCase().contains(_searchQuery.toLowerCase());
+      return matchesRegion && matchesSearch;
+    }).toList();
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: const Color(0xFF0A0A0A),
+        appBar: AppBar(
+          title: const Text(
+            'OVERWATCH COMMAND',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1.5,
+            ),
+          ),
+          backgroundColor: Colors.black,
+          elevation: 0,
+          centerTitle: true,
+          bottom: const TabBar(
+            indicatorColor: Colors.tealAccent,
+            indicatorWeight: 3,
+            labelColor: Colors.tealAccent,
+            unselectedLabelColor: Colors.grey,
+            tabs: [
+              Tab(icon: Icon(Icons.radar_rounded), text: "LIVE TRACKING"),
+              Tab(icon: Icon(Icons.report_problem_rounded), text: "COMPLAINTS"),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            _buildTrackingTab(filteredTourists),
+            _buildComplaintsTab(),
+          ],
+        ),
+      ),
+    );
+  }
+  
