@@ -392,4 +392,173 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                         fontWeight: FontWeight.w500,
                         height: 1.4,
                       ),
+                      decoration: _getPremiumInputDecoration(
+                        'Describe exactly what happened...',
+                        Icons.description_rounded,
+                      ).copyWith(alignLabelWithHint: true),
+                      validator: (value) => (value == null || value.isEmpty)
+                          ? 'A brief description is required.'
+                          : null,
+                    ),
+                    const SizedBox(height: 32),
+
+                    const Text(
+                      'SUPPORTING EVIDENCE',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF64748B),
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+
+                    // --- ENHANCED IMAGE UPLOADER ---
+                    InkWell(
+                      onTap: _base64Image == null
+                          ? _showImagePickerOptions
+                          : null,
+                      borderRadius: BorderRadius.circular(16),
+                      child: Container(
+                        height: 220,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: const Color(0xFFE2E8F0),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.02),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: _base64Image == null
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue[50],
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      Icons.add_a_photo_rounded,
+                                      size: 36,
+                                      color: Colors.blue[700],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  const Text(
+                                    'Tap to attach a photo',
+                                    style: TextStyle(
+                                      color: Color(0xFF475569),
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '(Max size: 1MB)',
+                                    style: TextStyle(
+                                      color: Colors.grey[500],
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(14),
+                                    child: Image.memory(
+                                      base64Decode(_base64Image!),
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 10,
+                                    right: 10,
+                                    child: InkWell(
+                                      onTap: () =>
+                                          setState(() => _base64Image = null),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(6),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.black54,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Icon(
+                                          Icons.close_rounded,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 10,
+                                    right: 10,
+                                    child: ElevatedButton.icon(
+                                      onPressed: _showImagePickerOptions,
+                                      icon: const Icon(
+                                        Icons.edit_rounded,
+                                        size: 16,
+                                      ),
+                                      label: const Text("Change"),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.black87,
+                                        foregroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+
+                    // --- SUBMIT BUTTON ---
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red[800],
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          elevation: 4,
+                          shadowColor: Colors.red.withOpacity(0.5),
+                        ),
+                        onPressed: _isLoading ? null : _submitComplaint,
+                        child: const Text(
+                          'SUBMIT OFFICIAL REPORT',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                  ],
+                ),
+              ),
+            ),
+          ),
 
