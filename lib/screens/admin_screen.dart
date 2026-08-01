@@ -723,4 +723,62 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
           );
         }
 
+        final docs = snapshot.data!.docs;
+
+        return ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: docs.length,
+          itemBuilder: (context, index) {
+            final doc = docs[index];
+            final data = doc.data() as Map<String, dynamic>;
+            final isResolved = data['status'] == 'resolved';
+            final timestamp = data['created_at'] as Timestamp?;
+            final date = timestamp != null
+                ? timestamp.toDate()
+                : DateTime.now();
+            final dateStr =
+                "${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute.toString().padLeft(2, '0')}";
+
+            return Container(
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF161616),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: isResolved
+                      ? Colors.green.withOpacity(0.3)
+                      : Colors.orange.withOpacity(0.5),
+                  width: 1.5,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              isResolved
+                                  ? Icons.check_circle_rounded
+                                  : Icons.pending_actions_rounded,
+                              color: isResolved ? Colors.green : Colors.orange,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              data['category'].toString().toUpperCase(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+
 
