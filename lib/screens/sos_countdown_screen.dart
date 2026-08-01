@@ -76,3 +76,30 @@ class _SOSCountdownScreenState extends State<SOSCountdownScreen>
       debugPrint("SMS Error: $e");
     }
   }
+
+  Future<void> _triggerEmergency() async {
+    setState(() {
+      _isSending = true;
+    });
+
+    _pulseController.stop();
+    HapticFeedback.vibrate(); // Final strong vibration
+
+    try {
+      final userId =
+          FirebaseAuth.instance.currentUser?.uid ?? 'anonymous_traveler_01';
+
+      // Mock coordinates for Kathmandu
+      double mockLat = 27.7172;
+      double mockLng = 85.3240;
+
+      // 1. Send Firebase Database Alert
+      DocumentReference emergencyRef = await FirebaseFirestore.instance
+          .collection('emergencies')
+          .add({
+            'user_id': userId,
+            'latitude': mockLat,
+            'longitude': mockLng,
+            'status': 'dispatching',
+            'timestamp': FieldValue.serverTimestamp(),
+          });
