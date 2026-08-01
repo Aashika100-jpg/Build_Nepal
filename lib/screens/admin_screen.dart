@@ -876,5 +876,42 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
                                       ),
                                     ),
                                   )
+                                : ElevatedButton.icon(
+                                    onPressed: () =>
+                                        _markComplaintResolved(doc.id),
+                                    icon: const Icon(
+                                      Icons.check_rounded,
+                                      size: 16,
+                                    ),
+                                    label: const Text(
+                                      "MARK RESOLVED",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.orange[800],
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
 
 
