@@ -91,3 +91,57 @@ class _VrTourScreenState extends State<VrTourScreen> {
               },
             ),
           ),
+
+          // 2. Translucent User Instruction Overlay
+          if (_showInstructionText)
+            Positioned(
+              bottom: 60,
+              left: 30,
+              right: 30,
+              child: AnimatedOpacity(
+                opacity: _showInstructionText ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 500),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 14,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.white24, width: 1),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        _motionTrackingActive
+                            ? Icons.screen_rotation_rounded
+                            : Icons.touch_app_rounded,
+                        color: Colors.tealAccent,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          _motionTrackingActive
+                              ? "Move and rotate your device to explore the horizon live!"
+                              : "Swipe across the interface screen canvas space to explore.",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            height: 1.3,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
