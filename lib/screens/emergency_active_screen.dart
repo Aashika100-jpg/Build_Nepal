@@ -489,3 +489,29 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
       ),
     );
   }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.search_off_rounded, size: 64, color: Colors.grey[400]),
+            const SizedBox(height: 16),
+            const Text(
+              "No Pricing Info Found",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black54),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              "Try modifying your query or changing the pick-up/drop-off destinations.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey[500], fontSize: 14),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
