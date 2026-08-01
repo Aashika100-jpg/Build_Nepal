@@ -445,3 +445,54 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 1,
+                    child: DropdownButtonFormField<String>(
+                      dropdownColor: Colors.grey[900],
+                      value: _selectedAlertRegion,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.black45,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 0,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      items:
+                          [
+                                'Kathmandu',
+                                'Pokhara',
+                                'Everest Region',
+                                'All Nepal',
+                              ]
+                              .map(
+                                (val) => DropdownMenuItem(
+                                  value: val,
+                                  child: Text(val),
+                                ),
+                              )
+                              .toList(),
+                      onChanged: (val) =>
+                          setState(() => _selectedAlertRegion = val!),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                height: 40,
+                child: ElevatedButton.icon(
+                  onPressed: _sendTargetedAlert,
+                  icon: const Icon(
+                    Icons.cell_tower,
