@@ -200,3 +200,45 @@ class _CoTravelerScreenState extends State<CoTravelerScreen> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                buddy["name"],
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              if (buddy["verified"])
+                                const Icon(
+                                  Icons.verified_rounded,
+                                  color: Colors.blue,
+                                  size: 18,
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            buddy["nationality"],
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Match Percentage Badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.green[400]!, Colors.green[700]!],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
