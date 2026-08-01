@@ -780,5 +780,101 @@ void _showTouristDetails(Map<String, dynamic> tourist) {
                             ),
                           ],
                         ),
+                        Text(
+                          dateStr,
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    if (data['vendor_name'] != null &&
+                        data['vendor_name'].toString().isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.storefront_rounded,
+                              color: Colors.grey,
+                              size: 16,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              data['vendor_name'],
+                              style: const TextStyle(
+                                color: Colors.tealAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    Text(
+                      data['description'] ?? 'No description provided.',
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        if (data['evidence_base64'] != null)
+                          GestureDetector(
+                            onTap: () =>
+                                _showEvidenceImage(data['evidence_base64']),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              margin: const EdgeInsets.only(right: 12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                image: DecorationImage(
+                                  image: MemoryImage(
+                                    base64Decode(data['evidence_base64']),
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black45,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Icon(
+                                  Icons.zoom_in_rounded,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: isResolved
+                                ? Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: const Text(
+                                      "ISSUE RESOLVED",
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  )
 
 
