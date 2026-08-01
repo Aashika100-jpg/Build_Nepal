@@ -84,3 +84,116 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
       pickup: "Lalitpur",
       dropoff: "Kathmandu",
     ),
+
+    // --- BUS ROUTES ---
+    PricingItem(
+      name: "Deluxe Tourist Bus (AC)",
+      location: "Intercity",
+      category: "bus",
+      minPrice: 1000,
+      maxPrice: 1600,
+      unit: "Seat",
+      tip: "Includes a lunch stop at a hygienic highway restaurant.",
+      pickup: "Kathmandu",
+      dropoff: "Pokhara",
+    ),
+    PricingItem(
+      name: "Local Express Bus",
+      location: "Kathmandu Valley",
+      category: "bus",
+      minPrice: 35,
+      maxPrice: 50,
+      unit: "Ride",
+      tip: "Student discounts are applicable with a valid ID card.",
+      pickup: "Kathmandu",
+      dropoff: "Bhaktapur",
+    ),
+    PricingItem(
+      name: "Local City Ringroad Bus",
+      location: "Kathmandu",
+      category: "bus",
+      minPrice: 25,
+      maxPrice: 40,
+      unit: "Ride",
+      tip: "Keep small changes handy; ask the conductor for your stop.",
+      pickup: "Kathmandu",
+      dropoff: "Lalitpur",
+    ),
+
+    // --- FOOD & DINING ---
+    PricingItem(
+      name: "Authentic Thakali Khaja Set",
+      location: "Local Eateries",
+      category: "food",
+      minPrice: 400,
+      maxPrice: 750,
+      unit: "Plate",
+      tip: "Ghee, dal, and vegetable refills are traditionally free.",
+    ),
+    PricingItem(
+      name: "Steam Chicken Momo",
+      location: "Anywhere",
+      category: "food",
+      minPrice: 150,
+      maxPrice: 320,
+      unit: "Plate (10 pcs)",
+      tip: "Local secondary alleys offer the most authentic jhol achar.",
+    ),
+    PricingItem(
+      name: "Bhaktapur Juju Dhau (King Curd)",
+      location: "Bhaktapur",
+      category: "food",
+      minPrice: 80,
+      maxPrice: 150,
+      unit: "Clay Pot",
+      tip: "Look for authentic clay pots near Durbar Square corners.",
+    ),
+    PricingItem(
+      name: "Newari Samay Baji Khaja Set",
+      location: "Kirtipur / Patan",
+      category: "food",
+      minPrice: 250,
+      maxPrice: 450,
+      unit: "Set",
+      tip: "Includes beaten rice, choila, bara, and dynamic local spices.",
+    ),
+
+    // --- GOODS & SOUVENIRS ---
+    PricingItem(
+      name: "Handmade Tibetan Singing Bowl",
+      location: "Bazaars",
+      category: "goods",
+      minPrice: 1500,
+      maxPrice: 4500,
+      unit: "Item",
+      tip: "Test the resonance frequency with the wooden mallet first.",
+    ),
+    PricingItem(
+      name: "Pure Pashmina Shawl",
+      location: "Thamel / Pokhara",
+      category: "goods",
+      minPrice: 2500,
+      maxPrice: 7000,
+      unit: "Item",
+      tip: "Perform the ring test to ensure genuine material thickness.",
+    ),
+    PricingItem(
+      name: "Traditional Bhadgaonle Dhaka Topi",
+      location: "Bhaktapur",
+      category: "goods",
+      minPrice: 350,
+      maxPrice: 900,
+      unit: "Item",
+      tip: "Hand-woven patterns hold significantly higher value.",
+    ),
+  ];
+
+  // Dynamic calculation of unique locations for dropdown menus
+  List<String> _getUniqueLocations(bool isPickup) {
+    final Set<String> locations = {"All"};
+    for (var item in _pricingDatabase) {
+      final val = isPickup ? item.pickup : item.dropoff;
+      if (val.isNotEmpty) locations.add(val);
+    }
+    return locations.toList()..sort();
+  }
