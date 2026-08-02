@@ -1,6 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../data/user_model.dart';
 import 'sos_countdown_screen.dart'; // IMPORTANT: Import the new screen
+
+final Map<String, Map<String, dynamic>> usersDatabase = {
+  '1234567': {
+    'name': 'John Doe',
+    'passportNumber': '1234567',
+    'location': 'Kathmandu',
+    'visaValidUntil': DateTime.now().add(const Duration(days: 365)),
+  },
+};
 
 class PassportScannerScreen extends StatelessWidget {
   const PassportScannerScreen({super.key});
@@ -62,10 +72,10 @@ class PassportScannerScreen extends StatelessWidget {
             onPressed: () {
               // Simulate scanning and retrieving user data
               String scannedPassportNumber = '1234567'; // Example
-              User? user = usersDatabase[scannedPassportNumber];
+              final userData = usersDatabase[scannedPassportNumber];
 
-              if (user != null) {
-                _showUserDetails(context, user);
+              if (userData != null) {
+                _showUserDetails(context, userData);
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

@@ -14,6 +14,10 @@ void main() async {
   runApp(const YatraSathiApp());
 }
 
+class DefaultFirebaseOptions {
+  static FirebaseOptions? get currentPlatform => null;
+}
+
 class YatraSathiApp extends StatelessWidget {
   const YatraSathiApp({super.key});
 

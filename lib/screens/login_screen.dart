@@ -339,3 +339,135 @@ class _PassportScannerDialogState extends State<PassportScannerDialog>
     )..repeat(reverse: true);
     _runScanSequence();
   }
+
+  Future<void> _runScanSequence() async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    if (!mounted) return;
+
+    setState(() {
+      _scanStatus = "Scanning MRZ and biometric data...";
+    });
+
+    for (int step = 1; step <= 5; step++) {
+      await Future.delayed(const Duration(milliseconds: 600));
+      if (!mounted) return;
+
+      setState(() {
+        _progress = step / 5;
+        _scanStatus = "Analyzing passport page ${step + 1}...";
+      });
+    }
+
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (!mounted) return;
+
+    setState(() {
+      _scanStatus = "Passport verified. Redirecting...";
+      _progress = 1.0;
+    });
+
+    await Future.delayed(const Duration(milliseconds: 800));
+    if (!mounted) return;
+
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  @override
+  void dispose() {
+    _scannerController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        width: 360,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Passport Scanner',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF0F172A),
+              ),
+            ),
+            const SizedBox(height: 20),
+            AnimatedBuilder(
+              animation: _scannerController,
+              builder: (context, child) {
+                return Container(
+                  height: 170,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                      color: const Color(0xFF7C3AED),
+                      width: 2,
+                    ),
+                    color: Colors.indigo[50],
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        child: Transform.translate(
+                          offset: Offset(
+                            0,
+                            20 * (1 - _scannerController.value) * 2,
+                          ),
+                          child: Container(
+                            height: 6,
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.indigo[400]!,
+                                  Colors.transparent,
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            LinearProgressIndicator(
+              value: _progress,
+              minHeight: 8,
+              borderRadius: BorderRadius.circular(8),
+              backgroundColor: const Color(0xFFE2E8F0),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                Color(0xFF4F46E5),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              _scanStatus,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Color(0xFF334155),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

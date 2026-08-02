@@ -8,8 +8,8 @@ class PricingItem {
   final double maxPrice;
   final String unit;
   final String tip;
-  final String pickup;   // Added for advanced routing
-  final String dropoff;  // Added for advanced routing
+  final String pickup; // Added for advanced routing
+  final String dropoff; // Added for advanced routing
 
   const PricingItem({
     required this.name,
@@ -198,22 +198,208 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
     return locations.toList()..sort();
   }
 
+  Widget _buildSearchBar() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: 'Search by name, location, or route',
+          prefixIcon: const Icon(Icons.search_rounded),
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide.none,
+          ),
+        ),
+        onChanged: (value) {
+          setState(() => _searchQuery = value);
+        },
+      ),
+    );
+  }
+
+  Widget _buildCategoryFilters() {
+    final tabs = [
+      {'label': 'All', 'value': 'all'},
+      {'label': 'Taxi', 'value': 'taxi'},
+      {'label': 'Bus', 'value': 'bus'},
+      {'label': 'Food', 'value': 'food'},
+      {'label': 'Goods', 'value': 'goods'},
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: tabs.map((tab) {
+          final selected = _selectedTab == tab['value'];
+          return ChoiceChip(
+            label: Text(tab['label'] as String),
+            selected: selected,
+            onSelected: (_) {
+              setState(() => _selectedTab = tab['value'] as String);
+            },
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildRouteSelector() {
+    final pickupOptions = _getUniqueLocations(true);
+    final dropoffOptions = _getUniqueLocations(false);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(14, 4, 14, 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: DropdownButtonFormField<String>(
+              value: _selectedPickup,
+              decoration: const InputDecoration(
+                labelText: 'Pickup',
+                border: OutlineInputBorder(),
+              ),
+              items: pickupOptions
+                  .map(
+                    (option) =>
+                        DropdownMenuItem(value: option, child: Text(option)),
+                  )
+                  .toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() => _selectedPickup = value);
+                }
+              },
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: DropdownButtonFormField<String>(
+              value: _selectedDropoff,
+              decoration: const InputDecoration(
+                labelText: 'Dropoff',
+                border: OutlineInputBorder(),
+              ),
+              items: dropoffOptions
+                  .map(
+                    (option) =>
+                        DropdownMenuItem(value: option, child: Text(option)),
+                  )
+                  .toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() => _selectedDropoff = value);
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: Text(
+          'No pricing items match your current filters.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPriceCard(PricingItem item) {
+    final displayPrice = item.minPrice == item.maxPrice
+        ? '${item.minPrice.toStringAsFixed(0)} ${item.unit}'
+        : '${item.minPrice.toStringAsFixed(0)}-${item.maxPrice.toStringAsFixed(0)} ${item.unit}';
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Card(
+        elevation: 1.5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      item.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.teal[50],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      displayPrice,
+                      style: const TextStyle(
+                        color: Colors.teal,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(item.location, style: TextStyle(color: Colors.grey[700])),
+              if (item.pickup.isNotEmpty || item.dropoff.isNotEmpty) ...[
+                const SizedBox(height: 6),
+                Text(
+                  '${item.pickup.isNotEmpty ? item.pickup : '—'} → ${item.dropoff.isNotEmpty ? item.dropoff : '—'}',
+                  style: const TextStyle(fontSize: 13),
+                ),
+              ],
+              const SizedBox(height: 8),
+              Text(
+                item.tip,
+                style: const TextStyle(fontSize: 13, color: Colors.black87),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Advanced Multi-Layer Filter Engine
     final filteredItems = _pricingDatabase.where((item) {
-      final matchesSearch = item.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+      final matchesSearch =
+          item.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
           item.location.toLowerCase().contains(_searchQuery.toLowerCase()) ||
           item.pickup.toLowerCase().contains(_searchQuery.toLowerCase()) ||
           item.dropoff.toLowerCase().contains(_searchQuery.toLowerCase());
 
       final matchesTab = _selectedTab == "all" || item.category == _selectedTab;
-      
+
       // Strict routing filter applied exclusively to transport tabs
       bool matchesRoute = true;
       if (_selectedTab == "taxi" || _selectedTab == "bus") {
-        if (_selectedPickup != "All" && item.pickup != _selectedPickup) matchesRoute = false;
-        if (_selectedDropoff != "All" && item.dropoff != _selectedDropoff) matchesRoute = false;
+        if (_selectedPickup != "All" && item.pickup != _selectedPickup)
+          matchesRoute = false;
+        if (_selectedDropoff != "All" && item.dropoff != _selectedDropoff)
+          matchesRoute = false;
       }
 
       return matchesSearch && matchesTab && matchesRoute;
@@ -232,18 +418,21 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
         backgroundColor: Colors.teal[800],
         foregroundColor: Colors.white,
         actions: [
-          if (_selectedPickup != "All" || _selectedDropoff != "All" || _searchQuery.isNotEmpty)
+          if (_selectedPickup != "All" ||
+              _selectedDropoff != "All" ||
+              _searchQuery.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.refresh_rounded),
               tooltip: "Reset Filters",
               onPressed: () {
                 setState(() {
                   _searchQuery = "";
+                  _selectedTab = "all";
                   _selectedPickup = "All";
                   _selectedDropoff = "All";
                 });
               },
-            )
+            ),
         ],
       ),
       body: Column(
@@ -255,12 +444,17 @@ class _FairPricingScreenState extends State<FairPricingScreen> {
             child: filteredItems.isEmpty
                 ? _buildEmptyState()
                 : ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 8,
+                    ),
                     itemCount: filteredItems.length,
-                    itemBuilder: (context, index) => _buildPriceCard(filteredItems[index]),
+                    itemBuilder: (context, index) =>
+                        _buildPriceCard(filteredItems[index]),
                   ),
           ),
         ],
       ),
     );
   }
+}

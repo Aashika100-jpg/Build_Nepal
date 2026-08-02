@@ -150,3 +150,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
       setState(() => _isTranslating = false);
     }
   }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
