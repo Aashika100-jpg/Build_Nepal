@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
+import 'package:url_launcher/url_launcher.dart'; // NEW IMPORT
 import 'emergency_active_screen.dart';
 
 class SOSCountdownScreen extends StatefulWidget {
@@ -286,20 +286,5 @@ class _SOSCountdownScreenState extends State<SOSCountdownScreen>
         ),
       ),
     );
-  }
-  
-  Future<void> launchUrl(Uri smsUri) async {
-    final bool launched = await url_launcher.launchUrl(
-      smsUri,
-      mode: url_launcher.LaunchMode.externalApplication,
-    );
-
-    if (!launched) {
-      throw Exception('Could not launch SMS app.');
-    }
-  }
-
-  Future<bool> canLaunchUrl(Uri smsUri) async {
-    return url_launcher.canLaunchUrl(smsUri);
   }
 }
