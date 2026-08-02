@@ -9,6 +9,7 @@ import 'ai_guide_screen.dart';
 import 'co_traveler_screen.dart';
 import 'vr_destinations_screen.dart';
 import 'translation_screen.dart';
+import 'traditional_item_viewer_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -67,9 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final isCritical = _daysRemaining <= 15;
-    final statusColor = isCritical
-        ? Colors.redAccent
-        : Colors.green[400]!;
+    final statusColor = isCritical ? Colors.redAccent : Colors.green[400]!;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
@@ -453,6 +452,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
+
+                // 3D Cultural Artifacts Feature Card
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+                  child: _buildPremiumFullWidthCard(
+                    context,
+                    title: '3D Cultural Artifacts',
+                    subtitle:
+                        'Explore 3D models of traditional Nepali items like Gagri, Khukuri, Karuwa, and more.',
+                    icon: Icons.view_in_ar_rounded,
+                    accentColor: const Color(0xFFE5A93C),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const TraditionalItemViewerScreen(),
+                      ),
+                    ),
+                  ),
+                ),
+
+                // VR 360 Spatial Tours Card
                 Padding(
                   padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
                   child: _buildPremiumFullWidthCard(
